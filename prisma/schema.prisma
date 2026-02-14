@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// === FASE 1 (Implementar agora) ===
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+}
+
+model Profile {
+  id           String         @id @default(cuid())
+  userId       String         @unique
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug         String         @unique
+  businessName String
+  ownerName    String?
+  bio          String?        @db.Text
+  avatarUrl    String?
+  coverUrl     String?
+  phone        String?
+  whatsapp     String?
+  instagram    String?
+  address      String?        @db.Text
+  city         String?
+  state        String?
+  latitude     Float?
+  longitude    Float?
+  openingHours Json?
+  isActive     Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  services     Service[]
+  gallery      GalleryImage[]
+  clients      Client[]
+  appointments Appointment[]
+}
+
+model Service {
+  id           String        @id @default(cuid())
+  profileId    String
+  profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?       @db.Text
+  priceMin     Decimal?      @db.Decimal(10, 2)
+  priceMax     Decimal?      @db.Decimal(10, 2)
+  duration     Int?
+  isActive     Boolean       @default(true)
+  sortOrder    Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// === FASE 2+ (Criar tabelas, nao implementar logica) ===
+
+model Client {
+  id           String        @id @default(cuid())
+  profileId    String
+  profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  name         String
+  phone        String?
+  email        String?
+  notes        String?       @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  pets         Pet[]
+  appointments Appointment[]
+}
+
+model Pet {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  name      String
+  breed     String?
+  size      PetSize?
+  notes     String?  @db.Text
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id        String            @id @default(cuid())
+  profileId String
+  profile   Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  clientId  String
+  client    Client            @relation(fields: [clientId], references: [id])
+  serviceId String
+  service   Service           @relation(fields: [serviceId], references: [id])
+  startTime DateTime
+  endTime   DateTime
+  status    AppointmentStatus @default(PENDING)
+  price     Decimal?          @db.Decimal(10, 2)
+  notes     String?           @db.Text
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+enum PetSize {
+  SMALL
+  MEDIUM
+  LARGE
+  EXTRA_LARGE
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
