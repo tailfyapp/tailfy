@@ -1,5 +1,6 @@
 import { Scissors, Star, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,9 +17,16 @@ export default function Home() {
             Mostre seus serviços, portfólio e receba agendamentos.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" className="text-lg px-8 py-4">
-              Criar minha vitrine
-            </Button>
+            <Link href="/signup">
+              <Button variant="secondary" className="text-lg px-8 py-4">
+                Criar minha vitrine
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="ghost" className="text-lg px-8 py-4 text-white hover:bg-white/20">
+                Já tenho conta
+              </Button>
+            </Link>
           </div>
         </div>
       </header>

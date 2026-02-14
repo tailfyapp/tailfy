@@ -1,4 +1,4 @@
-import type { Profile, Service, GalleryImage } from "@/generated/prisma/client";
+import type { Profile, Service, GalleryImage, Client, Pet } from "@/generated/prisma/client";
 
 export type ProfileWithRelations = Profile & {
   services: Service[];
@@ -11,3 +11,7 @@ export type OpeningHoursSchedule = {
 } | null;
 
 export type OpeningHours = Record<string, OpeningHoursSchedule>;
+
+export type ClientWithPets = Client & {
+  pets: Pet[];
+};

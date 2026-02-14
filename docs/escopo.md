@@ -31,13 +31,20 @@ Uma URL única (ex: `tailfy.app/petshop-do-joao`) que funciona como cartão de v
 - SEO otimizado (SSR, metadata dinâmica, Open Graph)
 - Design mobile-first responsivo
 
-### Fase 2 - Dashboard & Auth (PLANEJADA)
-- Autenticação (Supabase Auth)
-- Dashboard para gerenciar perfil, serviços e galeria
-- Upload de imagens (Supabase Storage)
-- Gestão de clientes e pets (CRUD)
-- Sistema de agendamento real (substituir CTA WhatsApp)
-- Row Level Security (RLS) para multi-tenancy
+### Fase 2 - Dashboard & Auth (CONCLUÍDA)
+- Autenticação via NextAuth.js v5 (Credentials + JWT)
+- Páginas de login e signup com criação automática de perfil
+- Dashboard com sidebar responsiva + topbar
+- Edição completa de perfil (info, horários, avatar, cover)
+- CRUD de serviços (criar, editar, deletar, toggle ativo)
+- CRUD de clientes com busca e paginação
+- CRUD de pets vinculados a clientes
+- Sistema de agendamento completo (profissional e público)
+- Página pública de booking multi-step (`/[slug]/agendar`)
+- Cálculo de slots disponíveis (30min, respeitando horários e conflitos)
+- Upload de imagens via Supabase Storage (avatar, cover, galeria)
+- Segurança: ownership verification em todas as Server Actions
+- WhatsApp mantido como opção complementar ao agendamento online
 
 ### Fase 3 - Modo Quiosque (FUTURA)
 - Interface de check-in presencial

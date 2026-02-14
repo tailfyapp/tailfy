@@ -93,6 +93,7 @@ export default async function StorefrontPage({ params }: PageProps) {
           <CtaButtonDesktop
             whatsapp={profile.whatsapp}
             businessName={profile.businessName}
+            slug={slug}
           />
 
           {/* Serviços */}
@@ -124,6 +125,7 @@ export default async function StorefrontPage({ params }: PageProps) {
       <CtaButton
         whatsapp={profile.whatsapp}
         businessName={profile.businessName}
+        slug={slug}
       />
     </div>
   );
