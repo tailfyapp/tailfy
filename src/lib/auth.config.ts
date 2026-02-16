@@ -15,7 +15,12 @@ export const authConfig: NextAuthConfig = {
         return isLoggedIn;
       }
 
-      if (pathname === "/login" || pathname === "/signup") {
+      if (
+        pathname === "/login" ||
+        pathname === "/signup" ||
+        pathname === "/forgot-password" ||
+        pathname === "/reset-password"
+      ) {
         if (isLoggedIn) {
           return Response.redirect(new URL("/dashboard", nextUrl));
         }

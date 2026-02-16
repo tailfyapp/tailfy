@@ -62,6 +62,25 @@ export const appointmentSchema = z.object({
   notes: z.string().max(500).optional(),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.email("Email inválido."),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().min(1, "Token é obrigatório."),
+    password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres."),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem.",
+    path: ["confirmPassword"],
+  });
+
+export const twoFactorCodeSchema = z.object({
+  code: z.string().length(6, "Código deve ter 6 dígitos."),
+});
+
 export const publicBookingSchema = z.object({
   serviceId: z.string().min(1, "Selecione um serviço."),
   date: z.string().min(1, "Selecione uma data."),
